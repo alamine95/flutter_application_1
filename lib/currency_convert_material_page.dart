@@ -1,11 +1,29 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+//1. Create a variable that the stores the converted current value
+//2. Create a function that multiplies the value given by the textField with 81
+//3. Store the value in the variable that we created
+//4. Display the variable
 
-class CurrencyConvertMaterialPage extends StatelessWidget{
+class CurrencyConvertMaterialPage extends StatefulWidget {
   const CurrencyConvertMaterialPage({super.key});
-  
+
   @override
-  Widget build(BuildContext context){
+  State<CurrencyConvertMaterialPage> createState() => 
+    _CurrentConvertMaterialPageState();
+}
+
+class _CurrentConvertMaterialPageState 
+    extends State<CurrencyConvertMaterialPage> {
+  double result=0;
+  TextEditingController textEditingController = TextEditingController();
+
+  void convert(){
+    result = double.parse(textEditingController.text) * 80;
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context){   
     final border = OutlineInputBorder(
                     borderSide: const BorderSide(
                       width: 2.0,
@@ -23,24 +41,25 @@ class CurrencyConvertMaterialPage extends StatelessWidget{
           centerTitle: true,
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                '0',
-                style: const TextStyle(
-                  fontSize: 55,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 255, 255, 255),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'INR ${result!=0 ? result.toStringAsFixed(3): result.toStringAsExponential(0)}',
+                  style: const TextStyle(
+                    fontSize: 55,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
                 ),
-              ),
-              // Padding
-              // Container
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
+                // Padding
+                // Container
+                TextField(
+                  controller: textEditingController,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   decoration: InputDecoration(
                     hintText: 'Please enter the amount in USD',
@@ -58,20 +77,13 @@ class CurrencyConvertMaterialPage extends StatelessWidget{
                   decimal: true,
                 ),
                 ),
-              ),
-              // button
-
-              // raised button
-              //appears like a text
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: TextButton(
-                  onPressed: () {
-                    // debug, release, profile
-                    if(kDebugMode) {
-                      print('Button released clicked');
-                    }
-                  },
+                const SizedBox(height: 10),
+                // button
+          
+                // raised button
+                //appears like a text
+                ElevatedButton(
+                  onPressed: convert,
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
@@ -81,12 +93,17 @@ class CurrencyConvertMaterialPage extends StatelessWidget{
                     )
                   ),
                   child: const Text('Convert'),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ), 
         ),
       ),
     );
   }
 }
+
+// class CurrencyConvertMaterialPagee extends StatelessWidget{
+//   const CurrencyConvertMaterialPagee({super.key});
+  
+// }
